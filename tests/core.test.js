@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { create, all } from 'mathjs';
+const math = create(all);
+test('basic arithmetic and precedence',()=>{assert.equal(math.evaluate('2+3*4'),14);assert.equal(math.evaluate('(2+3)*4'),20);});
+test('powers, roots and logarithms',()=>{assert.equal(math.evaluate('2^10'),1024);assert.equal(math.evaluate('sqrt(81)'),9);assert.equal(math.evaluate('log10(1000)'),3);});
+test('implicit multiplication',()=>{assert.equal(math.evaluate('3(4+1)'),15);});
+test('complex numbers',()=>{const z=math.evaluate('(3+4i)*(2-i)');assert.equal(z.re,10);assert.equal(z.im,5);});
+test('matrix determinant and inverse',()=>{const a=math.matrix([[1,2],[3,4]]);assert.equal(math.det(a),-2);const inv=math.inv(a).toArray();assert.equal(inv[0][0],-2);assert.equal(inv[1][1],-0.5);});
+test('statistics',()=>{assert.equal(math.mean([2,4,4,4,5,5,7,9]),5);assert.equal(math.median([2,4,4,4,5,5,7,9]),4.5);});
