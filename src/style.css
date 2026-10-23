@@ -113,3 +113,59 @@ footer{display:none}
  .modebar{margin:3px 0}.mode{padding:3px 1px}.keypad{gap:3px}.below-keys{margin-top:2px}
  .text-btn{font-size:8px}
 }
+
+
+/* Final compact scientific-calculator face: every control visible at once */
+html,body{height:100%;min-height:0;overflow:hidden}
+body{overscroll-behavior:none}
+.app-shell{width:100%;height:100dvh;max-height:100dvh;min-height:0;overflow:hidden;padding:5px 7px;display:flex;flex-direction:column;gap:5px}
+.topbar{flex:0 0 auto;margin:0;padding:4px 8px;min-height:35px}
+.brand{gap:7px}.brand-mark{width:30px;height:30px}.brand-mark svg{width:22px;height:22px}
+.brand strong{font-size:13px}.brand small{font-size:8px;margin-top:0}
+.top-actions{gap:4px}.icon-btn,.angle-btn{min-width:29px;min-height:29px;padding:4px 6px;border-radius:7px}
+.workspace{display:block;flex:1;min-height:0;overflow:hidden}
+.calculator{height:100%;min-height:0;padding:6px;display:flex;flex-direction:column;gap:0;border-radius:13px}
+.calculator:before{left:12px;right:12px;height:2px}
+.lcd{flex:0 0 auto;min-height:0;padding:4px 7px 3px;border-width:3px;border-radius:7px}
+.lcd-top{font-size:7px;letter-spacing:.04em}
+.expression,.expression-display{font-size:clamp(12px,3.2vw,17px);min-height:20px;margin:3px 0 2px;padding:0;line-height:1.2}
+.expression-display[data-empty=true]::before{font-size:10px}
+.result-line{gap:4px}.result-line span{font-size:7px}.result-line output{font-size:clamp(22px,6vw,32px);line-height:1.1;letter-spacing:-.5px}
+.error{font-size:9px;margin-top:1px}
+.modebar{flex:0 0 auto;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;margin:4px 0}
+.mode{min-width:0;padding:4px 0;font-size:8px;line-height:1.1;border-radius:5px}
+.keypad{flex:1;min-height:0;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));gap:3px}
+.key{min-width:0;min-height:0;height:100%;padding:0 1px;border-radius:6px;font-size:clamp(11px,3.1vw,16px);line-height:1.05;box-shadow:0 2px 0 color-mix(in srgb,var(--line),transparent 12%)}
+.key small{font-size:clamp(6px,1.6vw,8px);margin-top:1px;line-height:1}
+.key.fn{font-size:clamp(9px,2.6vw,12px)}.key.utility{font-size:clamp(8px,2.2vw,10px)}
+.key.op{font-size:clamp(14px,4vw,20px)}.key.equals{font-size:clamp(15px,4.5vw,22px)}
+.below-keys{flex:0 0 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2px;margin-top:3px}
+.text-btn{min-width:0;padding:3px 1px;font-size:9px;white-space:nowrap}
+.sidebar,footer{display:none!important}
+.tool-panel{position:fixed;inset:5px;z-index:50;margin:0;padding:9px;overflow:auto;border-radius:12px;background:var(--surface);box-shadow:0 0 0 100vmax #0009}
+.tool-panel .card-heading{position:sticky;top:-9px;z-index:2;background:var(--surface);padding:4px 0;margin-bottom:5px}
+.tool-panel #panelContent{max-width:none}
+.tool-panel label{margin:6px 0 3px;font-size:11px}
+.tool-panel input,.tool-panel textarea,.tool-panel select{padding:7px;font-size:14px}
+.tool-panel .primary,.tool-panel .secondary{padding:7px 10px;margin-top:6px}
+.tool-panel .output{padding:7px;margin-top:6px;font-size:11px;line-height:1.5}
+.tool-panel hr{margin:8px 0}
+.panel-tools{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+.panel-tools .tool-tile{padding:6px;font-size:10px}
+@media(min-width:700px){
+ .app-shell{max-width:660px;margin:0 auto;padding:8px}
+ .brand strong{font-size:15px}.brand small{font-size:9px}
+ .lcd-top{font-size:8px}.expression,.expression-display{font-size:17px;min-height:24px}
+ .result-line output{font-size:34px}.mode{font-size:9px;padding:5px}
+ .key{font-size:17px}.key.fn{font-size:13px}.key.utility{font-size:11px}
+ .key small{font-size:8px}.text-btn{font-size:10px}
+}
+@media(max-height:560px){
+ .app-shell{padding:3px;gap:2px}.topbar{min-height:29px;padding:2px 6px}
+ .brand-mark{width:25px;height:25px}.brand strong{font-size:11px}.brand small{display:none}
+ .icon-btn,.angle-btn{min-height:24px;min-width:25px;padding:2px 4px}
+ .lcd{padding:2px 5px;border-width:2px}.lcd-top{font-size:6px}
+ .expression,.expression-display{min-height:16px;margin:1px 0;font-size:12px}
+ .result-line output{font-size:21px}.modebar{margin:2px 0;gap:2px}.mode{padding:3px 0;font-size:7px}
+ .keypad{gap:2px}.key{border-radius:4px}.key small{font-size:6px}.below-keys{margin-top:2px}.text-btn{font-size:8px;padding:1px}
+}
