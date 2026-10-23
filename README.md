@@ -1,44 +1,65 @@
 # Scientific-cal — Chatpata Prani
 
-A mobile-first scientific calculator inspired by classic scientific calculators such as the Casio fx-991ES PLUS. This is an original implementation, not an official Casio product.
+A mobile-first scientific calculator and mathematics workspace inspired by the capabilities of classic scientific calculators and modern open-source math tools. Original UI and implementation; not affiliated with Casio.
 
-## Run it
+## Run locally
 
-Open `index.html` in a modern browser, or host the repository as a static site. No build step or backend is required.
+Requires Node.js 18+.
 
-## Included in this initial version
+```bash
+npm install
+npm run dev
+```
 
-- Responsive scientific-calculator-style display and keypad
-- DEG/RAD/GRA angle-mode selector
-- Basic arithmetic, powers, roots, factorials, logarithms and trigonometry
-- Answer reuse and calculation history
-- Scientific-constant quick insert
-- Unit conversion for common length, mass, pressure, energy and speed units
-- Quadratic/linear equation solver
-- Descriptive statistics
-- 2×2 matrix determinant and inverse
-- Decimal, binary, octal and hexadecimal conversion
-- COMP, CMPLX, STAT, BASE-N, EQN, MATRIX, TABLE and VECTOR mode menu
+Open the local URL printed by Vite. Build a production version with `npm run build`; preview it with `npm run preview`. Run regression tests with `npm test`.
 
-## Important limitations
+## Features
 
-This is a starter implementation, not yet a complete fx-991ES PLUS emulator. Complex-number arithmetic, true matrix/vector mode workflows, full statistical distributions/regression, equation systems, table generation, fraction/S⇔D conversion, STO/variables, symbolic/numerical calculus, and the full 40-unit conversion catalogue still need implementation and testing. Do not rely on this build for safety-critical or high-stakes calculations.
+- **Scientific engine:** arithmetic, implicit multiplication, powers, roots, factorials, logarithms, trigonometric and inverse-trigonometric functions, DEG/RAD/GRAD modes, complex values and answer reuse.
+- **Calculator memory:** M and saved variables persisted in local storage.
+- **History:** saved calculations, reuse previous expressions, clear history and export history to JSON.
+- **Complex numbers:** complex arithmetic using `i`, with math.js expression support.
+- **Graphing:** plot a function of `x), adjustable x-range, sampled canvas plot.
+- **Matrices:** 2×2 determinant, inverse, transpose, add, subtract, multiply and solve a small linear system.
+- **Vectors:** 3D addition/subtraction, dot product, cross product, magnitudes and angle.
+- **Statistics:** mean, median, modes, range, quartiles, population/sample variance and standard deviation; linear regression and R².
+- **Equation solving:** linear/quadratic equations, complex roots and 2-variable linear systems.
+- **Numerical calculus:** finite-difference derivative, trapezoidal numerical integration and Newton root search.
+- **Function table:** evaluate a function over a selected range and step.
+- **BASE-N:** DEC/BIN/OCT/HEX conversion and basic bitwise output.
+- **Unit converter:** common length, area, volume, mass, time, speed, pressure, energy, power, force and data units.
+- **Physical constants:** a quick reference for common physics constants.
+- **Responsive design:** phone, tablet and desktop layouts; dark/light themes; keyboard input.
 
-## Feature roadmap
+## Expression examples
 
-1. Build a proper expression parser and regression tests (avoid evaluating expressions through JavaScript).
-2. Add exact fraction arithmetic and natural textbook display.
-3. Implement complete COMP, CMPLX, STAT, BASE-N, EQN, MATRIX, TABLE and VECTOR workflows.
-4. Add all documented physical constants and the calculator's complete unit-conversion list.
-5. Add offline PWA support and test on small Android screens.
-6. Add automated tests for trigonometry, angle modes, precedence, factorials, matrices, statistics and conversions.
+| Expression | Meaning |
+| --- | --- |
+| `sin(30)` in DEG mode | 0.5 |
+| `2pi` | implicit multiplication |
+| `3(4+1)` | implicit multiplication |
+| `sqrt(81)` | square root |
+| `(3+4i)*(2-i)` | complex multiplication |
+| `x^2` in the graph/table/calculus tools | function of x |
 
-## Inspiration and reference projects
+## Project structure
 
-The following public projects were reviewed as feature references. This repository does not copy their source code; this initial implementation is independently written.
+- `index.html` — app entry point
+- `src/main.js` — calculator engine, UI and math tools
+- `src/style.css` — responsive interface
+- `tests/core.test.js` — core math regression tests
+- `vite.config.js` — build configuration
 
-- [Akhinoor14/fx991exCalculator](https://github.com/Akhinoor14/fx991exCalculator) — broad ClassWiz-style mode and constant/conversion feature set; its README states MIT licensing.
-- [Develifture/scientific-calculator](https://github.com/Develifture/scientific-calculator) — offline-first web calculator with graphing, matrices, statistics, regression and equation solving.
-- [Casio fx-991ES PLUS product information](https://www.casio.com/in/scientific-calculators/product.FX-991ESPLUS-2BU/1000/) — hardware reference for the target style and modes.
+The math engine uses the open-source math.js package rather than JavaScript `eval`. The app runs calculations in the browser and does not require a backend or user account. The first install/build needs network access to fetch npm dependencies; a production build can be hosted as static files.
 
-Feature availability and correctness should be verified before claiming parity with a physical calculator.
+## Important accuracy notes
+
+This is a capable browser-based calculator, **not a cycle-accurate emulator** of any physical calculator. Graphs, numerical derivatives, numerical integration and root finding are approximate. The current matrix UI is limited to 2×2, and the statistics and distributions tools are not a complete replacement for a professional statistics package. The converter includes common units, not every unit from the physical calculator's printed reference panel. Validate important results independently.
+
+## Feature inspiration
+
+The feature set takes inspiration from publicly documented ideas in projects such as [Develifture/scientific-calculator](https://github.com/Develifture/scientific-calculator), [Akhinoor14/fx991exCalculator](https://github.com/Akhinoor14/fx991exCalculator), [JKMMaths/advanced-scientific-calculator](https://github.com/JKMMaths/advanced-scientific-calculator), and [SymvaCAS](https://github.com/kirinonakar/symvacas). Their source code has not been copied wholesale into this repository; this implementation is independently assembled around feature concepts and the math.js library. See each upstream repository's license before reusing any of its source files.
+
+## License
+
+No license has been added to this repository yet. Add a project license before redistributing the application or accepting outside contributions. The math.js dependency retains its own license.
