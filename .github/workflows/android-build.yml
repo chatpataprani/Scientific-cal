@@ -44,6 +44,43 @@ jobs:
       - name: Sync app into Android project
         run: npx cap sync android
 
+      - name: Configure Play Store signing (optional)
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            echo "Signing secrets not configured; release AAB will be unsigned."
+            exit 0
+          fi
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 --decode > android/app/release-key.jks
+          export ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("android/app/build.gradle")
+          s = p.read_text()
+          if "signingConfigs {" not in s:
+              s = s.replace("android {", """android {
+              signingConfigs {
+                  release {
+                      storeFile file("release-key.jks")
+                      storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+                      keyAlias System.getenv("ANDROID_KEY_ALIAS")
+                      keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+                  }
+              }
+          """, 1)
+          start = s.find("buildTypes {")
+          pos = s.find("release {", start)
+          if start < 0 or pos < 0:
+              raise SystemExit("Could not find Android release build type to configure signing")
+          brace = pos + len("release {")
+          s = s[:brace] + "\\n            signingConfig signingConfigs.release" + s[brace:]
+          p.write_text(s)
+          PY
+
       - name: Build APK and Android App Bundle
         working-directory: android
         run: |
