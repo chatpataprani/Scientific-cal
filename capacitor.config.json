@@ -1,6 +1,6 @@
 {
-  "appId": "com.chatpataprani.scientificcal",
-  "appName": "Chatpata Prani Scientific Calculator",
+  "appId": "com.chatpataprani.lowkeypi",
+  "appName": "Lowkey Pi",
   "webDir": "dist",
   "server": {
     "androidScheme": "https"
