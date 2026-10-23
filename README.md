@@ -2,7 +2,7 @@
 
 A mobile-first scientific calculator and mathematics workspace inspired by the capabilities of classic scientific calculators and modern open-source math tools. Original UI and implementation; not affiliated with Casio.
 
-## Run locally
+## Project links\n\n- GitHub: https://github.com/chatpataprani\n- Instagram: https://www.instagram.com/chatpataprani/\n- Source repository: https://github.com/chatpataprani/Scientific-cal\n\n## Run locally
 
 Requires Node.js 18+.
 
@@ -15,7 +15,7 @@ Open the local URL printed by Vite. Build a production version with `npm run bui
 
 ## Features
 
-- **Scientific engine:** arithmetic, implicit multiplication, powers, roots, factorials, logarithms, trigonometric and inverse-trigonometric functions, DEG/RAD/GRAD modes, complex values and answer reuse.
+- **Calculator UI:** hardware-inspired scientific-calculator body, LCD-style result display, tactile keypad, mode selectors, responsive mobile layout, dark/light themes, and Settings with Chatpata Prani branding plus GitHub/Instagram/project links.\n- **Number tools:** permutations (nPr), combinations (nCr), GCD, LCM, prime checks, rounding, and random values.\n- **Scientific engine:** arithmetic, implicit multiplication, powers, roots, factorials, logarithms, trigonometric and inverse-trigonometric functions, DEG/RAD/GRAD modes, complex values and answer reuse.
 - **Calculator memory:** M and saved variables persisted in local storage.
 - **History:** saved calculations, reuse previous expressions, clear history and export history to JSON.
 - **Complex numbers:** complex arithmetic using `i`, with math.js expression support.
