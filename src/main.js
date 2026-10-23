@@ -17,7 +17,8 @@ const units = {
  Energy:{J:1,kJ:1000,MJ:1e6,cal:4.184,kcal:4184,Wh:3600,kWh:3.6e6,eV:1.602176634e-19},
  Power:{W:1,kW:1000,MW:1e6,hp:745.699871582},
  Force:{N:1,kN:1000,lbf:4.4482216153},
- Temperature:{C:1,F:1,K:1},\n Data:{bit:1,B:8,kB:8000,MB:8e6,GB:8e9,KiB:8192,MiB:8388608,GiB:8589934592}
+ Temperature:{C:1,F:1,K:1},
+ Data:{bit:1,B:8,kB:8000,MB:8e6,GB:8e9,KiB:8192,MiB:8388608,GiB:8589934592}
 };
 const state = { expr:'', angle:store.get('angle','DEG'), mode:'COMP', ans:store.get('ans',0), memory:store.get('memory',0), history:store.get('history',[]), shift:false, inv:false, theme:store.get('theme','dark'), lastResult:null, variables:store.get('variables',{}) };
 const modes = ['COMP','CMPLX','BASE-N','MATRIX','VECTOR','STAT','EQN','TABLE','GRAPH','CALC'];
