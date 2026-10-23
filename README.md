@@ -19,6 +19,16 @@ npm run dev
 
 Open the local URL printed by Vite. Build a production version with `npm run build`; preview it with `npm run preview`. Run regression tests with `npm test`.
 
+## Android APK / Play Store build
+
+The GitHub Actions workflow **Build Android APK and Play Store bundle** builds the web calculator into an Android app using Capacitor. Open the repository's **Actions** tab, choose that workflow, and select **Run workflow**. Download the artifact named `chatpata-prani-scientific-cal-android` after it finishes.
+
+- The debug APK is for installing and testing on your own Android phone.
+- The release AAB is the format used for Google Play, but it must be signed with your permanent app-upload key before uploading.
+- To enable signing in Actions, add repository secrets named `ANDROID_KEYSTORE_BASE64`, `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS`, and `ANDROID_KEY_PASSWORD`. The Base64 secret must contain your existing upload keystore. Keep a secure backup of that keystore; do not commit it to GitHub. If these secrets are not configured, the workflow deliberately produces an unsigned release AAB.
+
+The Android application ID is `com.chatpataprani.scientificcal`. Choose the final Play Store app ID carefully before your first release, because changing it later creates a different app listing.
+
 ## Features
 
 - **Calculator UI:** hardware-inspired scientific-calculator body, LCD-style result display, tactile keypad, mode selectors, responsive mobile layout, dark/light themes, and Settings with Chatpata Prani branding plus GitHub/Instagram/project links.
