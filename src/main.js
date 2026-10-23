@@ -20,7 +20,7 @@ const units = {
  Temperature:{C:1,F:1,K:1},
  Data:{bit:1,B:8,kB:8000,MB:8e6,GB:8e9,KiB:8192,MiB:8388608,GiB:8589934592}
 };
-const state = { expr:'', angle:store.get('angle','DEG'), mode:'COMP', ans:store.get('ans',0), memory:store.get('memory',0), history:store.get('history',[]), shift:false, inv:false, theme:store.get('theme','dark'), lastResult:null, variables:store.get('variables',{}) };
+const state = { expr:'', angle:store.get('angle','DEG'), mode:'COMP', ans:store.get('ans',0), memory:store.get('memory',0), history:store.get('history',[]), shift:false, inv:false, theme:store.get('theme','dark'), sound:store.get('sound',true), lastResult:null, variables:store.get('variables',{}) };
 const modes = ['COMP','CMPLX','BASE-N','MATRIX','VECTOR','STAT','EQN','TABLE','GRAPH','CALC'];
 function fmt(v){
  try {
@@ -90,12 +90,12 @@ function toolNumber(){
 function toolSettings(){
  panel('Settings & branding',`
   <div class="settings-hero"><div class="settings-logo">π</div><div><span class="eyebrow">LOWKEY PI</span><h3>Lowkey Pi</h3><p>Lowkey Pi · v2.2</p></div></div>
-  <div class="settings-section"><h3>Appearance</h3><div class="settings-row"><span><b>Color theme</b><small>Choose your calculator look</small></span><select id="settingsTheme"><option value="dark">Dark</option><option value="light">Light</option></select></div><div class="settings-row"><span><b>Angle unit</b><small>Used by trigonometry</small></span><select id="settingsAngle"><option>DEG</option><option>RAD</option><option>GRA</option></select></div></div>
+  <div class="settings-section"><h3>Appearance</h3><div class="settings-row"><span><b>Color theme</b><small>Choose your calculator look</small></span><select id="settingsTheme"><option value="dark">Dark</option><option value="light">Light</option></select></div><div class="settings-row"><span><b>Key sounds</b><small>Soft calculator click on every key press</small></span><select id="settingsSound"><option value="true">On</option><option value="false">Off</option></select></div><div class="settings-row"><span><b>Angle unit</b><small>Used by trigonometry</small></span><select id="settingsAngle"><option>DEG</option><option>RAD</option><option>GRA</option></select></div></div>
   <div class="settings-section"><h3>About Lowkey Pi</h3><p class="settings-copy">A browser-based scientific calculator with graphing, statistics, equations, matrices, vectors and conversion tools. Your calculation history stays on this device.</p><div class="settings-links"><a class="settings-link" href="https://github.com/chatpataprani" target="_blank" rel="noopener noreferrer"><span class="link-mark">GH</span><span><b>GitHub</b><small>Explore projects and source code</small></span><span>↗</span></a><a class="settings-link" href="https://www.instagram.com/chatpataprani/" target="_blank" rel="noopener noreferrer"><span class="link-mark">IG</span><span><b>Instagram</b><small>Follow Lowkey Pi</small></span><span>↗</span></a><a class="settings-link" href="https://github.com/chatpataprani/Lowkey Pi" target="_blank" rel="noopener noreferrer"><span class="link-mark">LP</span><span><b>Lowkey Pi repository</b><small>Open-source project page</small></span><span>↗</span></a></div></div>
   <div class="settings-section"><h3>Local data</h3><p class="settings-copy">History, theme and memory are stored in this browser only.</p><button class="secondary" id="clearLocalData">Clear calculation history</button><p class="settings-note">Not affiliated with Casio. Results from numerical calculus and solvers may be approximate.</p></div>
  `);
  const theme=$('#settingsTheme');theme.value=state.theme;theme.onchange=()=>{state.theme=theme.value;store.set('theme',state.theme);document.body.dataset.theme=state.theme;};
- const angle=$('#settingsAngle');angle.value=state.angle;angle.onchange=()=>{state.angle=angle.value;renderExpr();angle.value=state.angle;};
+ const sound=$('#settingsSound');sound.value=String(state.sound);sound.onchange=()=>{state.sound=sound.value==='true';store.set('sound',state.sound);if(state.sound)playKeySound();};\n const angle=$('#settingsAngle');angle.value=state.angle;angle.onchange=()=>{state.angle=angle.value;renderExpr();angle.value=state.angle;};
  $('#clearLocalData').onclick=()=>{state.history=[];store.set('history',[]);renderHistory();$('#subresult').textContent='History cleared';};
 }
 function renderApp(){
@@ -127,7 +127,7 @@ function renderApp(){
   <section class="card tool-panel" id="panel" hidden><div class="card-heading"><h2 id="panelTitle">Tool</h2><button class="icon-btn" id="panelClose" aria-label="Close tool">×</button></div><div id="panelContent"></div></section>
   <footer>Lowkey Pi · Lowkey Pi v2.2 · Scientific calculator · Not affiliated with Casio.</footer>
  </main>`;
- renderExpr();renderHistory();$('#result').textContent='0';
+ renderExpr();renderHistory();$('#result').textContent='0';\n $('#keypad').addEventListener('click',e=>{if(e.target.closest('button'))playKeySound();},{capture:true});
  $('#expression').addEventListener('input',e=>{state.expr=e.target.value;$('#error').textContent='';});
  $('#expression').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();calculate()}if(e.key==='Escape'){state.expr='';renderExpr();$('#result').textContent='0'}});
  $('#keypad').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const act=b.dataset.action;if(b.dataset.insert!==undefined){insert(b.dataset.insert);return}if(b.dataset.fn){let fn=b.dataset.fn;if(state.inv)fn='a'+fn;insert(fn+'(');state.inv=false;renderExpr();return}if(act==='equals')calculate();if(act==='clear'){state.expr='';renderExpr();$('#result').textContent='0';$('#error').textContent='';}if(act==='delete'){const i=$('#expression'),p=i.selectionStart??state.expr.length;state.expr=state.expr.slice(0,Math.max(0,p-1))+state.expr.slice(i.selectionEnd??p);renderExpr()}if(act==='sign')insert('-('),insert(')');if(act==='shift'){state.shift=!state.shift;state.inv=state.shift;renderExpr()}if(act==='inverse'){state.inv=!state.inv;renderExpr()}if(act==='fraction'){const v=state.lastResult;if(typeof v!=='number')return;$('#subresult').textContent='Approximate fraction: '+fraction(v); }if(act==='memory'){state.memory=state.ans;store.set('memory',state.memory);$('#subresult').textContent='Stored Ans in M = '+fmt(state.memory)}if(act==='copy')copyResult();if(act==='history-export')exportHistory();});
