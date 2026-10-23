@@ -28,3 +28,20 @@
 .key.op:active,.key.equals:active{box-shadow:0 1px 0 #5e754a}
 .calculator:before{left:24px;right:24px;background:linear-gradient(90deg,#9ab780,#d6e3bf,#9ab780);opacity:.85}
 @media(max-width:400px){.modebar{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}.mode{padding:6px 2px;font-size:9px}.keypad{gap:5px}.key{min-height:49px;border-radius:6px}}
+
+/* Lowkey Pi physical scientific keypad layout */
+#keypad{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px 7px;align-items:end;margin-top:10px}
+#keypad .key{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:56px;padding:7px 2px;border-radius:8px 8px 11px 11px;border:1px solid #555860;background:linear-gradient(180deg,#484a51,#303238 55%,#25262b);color:#f5f5f7;box-shadow:0 3px 0 #0b0c0e,0 5px 7px #0005,inset 0 1px 0 #ffffff30;font-size:16px;font-weight:750;line-height:1.05;white-space:normal;touch-action:manipulation;transition:transform .07s ease,filter .08s ease,box-shadow .07s ease}
+#keypad .key small{display:block;font-size:9px;font-weight:600;line-height:1;color:#c4c6cc}
+#keypad .key.digit{min-height:62px;background:linear-gradient(180deg,#747780,#5a5d65 58%,#484a51);border-color:#858891;color:#fff;font-size:22px;box-shadow:0 4px 0 #222328,0 5px 7px #0005,inset 0 1px 0 #ffffff45}
+#keypad .key.fn{background:linear-gradient(180deg,#42444a,#292a30)}
+#keypad .key.utility{min-height:48px;background:linear-gradient(180deg,#d7d8dc,#9da0a8);border-color:#d5d6da;color:#22242a;font-size:12px;box-shadow:0 3px 0 #56585f,0 5px 7px #0005,inset 0 1px 0 #fff}
+#keypad .key.utility small{color:#44464d}
+#keypad .key.danger{background:linear-gradient(180deg,#e98a4b,#c65a28);border-color:#f09a60;color:#fff;box-shadow:0 4px 0 #71351d,0 5px 7px #0005,inset 0 1px 0 #ffffff4d}
+#keypad .key.op{background:linear-gradient(180deg,#59605c,#383d3a);border-color:#6b726e;font-size:22px}
+#keypad .key.equals{background:linear-gradient(180deg,#e7a064,#d36a30);border-color:#f0ad77;color:#1d1713;font-size:24px;box-shadow:0 4px 0 #783c1d,0 5px 7px #0005,inset 0 1px 0 #ffffff70}
+#keypad .key:active,#keypad .key.pressed{transform:translateY(3px);filter:brightness(1.12);box-shadow:0 1px 0 #0b0c0e,inset 0 1px 4px #0006}
+#keypad .key.utility:active{box-shadow:0 1px 0 #56585f,inset 0 1px 4px #0005}
+#keypad .key:focus-visible{outline:2px solid #e7c15d;outline-offset:2px}
+@media(max-width:380px){#keypad{gap:7px 5px}.app-shell{padding-inline:10px}#keypad .key{min-height:50px;font-size:14px}#keypad .key.digit{min-height:54px;font-size:20px}#keypad .key small{font-size:8px}#keypad .key.utility{font-size:10px}}
+@media(prefers-reduced-motion:reduce){#keypad .key{transition:none}}
