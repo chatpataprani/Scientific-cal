@@ -113,7 +113,8 @@ function renderApp(){
  $$('.mode').forEach(b=>b.addEventListener('click',()=>{state.mode=b.dataset.mode;$$('.mode').forEach(x=>x.classList.toggle('active',x===b));renderExpr();const m=state.mode;const map={'COMP':null,'CMPLX':'complex','BASE-N':'base','MATRIX':'matrix','VECTOR':'vector','STAT':'stats','EQN':'equations','TABLE':'table','GRAPH':'graph','CALC':'calculus'};if(map[m])tools[map[m]]();else closePanel();}));
  $$('[data-tool]').forEach(b=>b.addEventListener('click',()=>tools[b.dataset.tool]?.()));
  $('#angleBtn').onclick=()=>{state.angle=state.angle==='DEG'?'RAD':state.angle==='RAD'?'GRA':'DEG';renderExpr();};
- $('#themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';store.set('theme',state.theme);document.body.dataset.theme=state.theme;};\n $('#settingsBtn').onclick=()=>tools.settings();
+ $('#themeBtn').onclick=()=>{state.theme=state.theme==='dark'?'light':'dark';store.set('theme',state.theme);document.body.dataset.theme=state.theme;};
+ $('#settingsBtn').onclick=()=>tools.settings();
  $('#panelClose').onclick=closePanel;$('#historyClear').onclick=()=>{state.history=[];store.set('history',[]);renderHistory()};$('#historyExport').onclick=exportHistory;
  $('#history').addEventListener('click',e=>{const b=e.target.closest('[data-history]');if(!b)return;const h=state.history[Number(b.dataset.history)];if(h){state.expr=h.expr;renderExpr();$('#result').textContent=h.result;$('#expression').focus()}});
  $('#panelContent').addEventListener('click',e=>{const b=e.target.closest('[data-insert]');if(b){insert(b.dataset.insert);$('#expression').focus();}});
